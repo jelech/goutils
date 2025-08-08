@@ -1,0 +1,22 @@
+version: "1"
+run:
+  timeout: 5m
+  tests: true
+
+linters:
+  disable:
+    - errcheck # 在开发阶段暂时禁用，发布前可以启用
+  enable:
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - typecheck
+    - unused
+    - gofmt
+    - goimports
+    - misspell
+    - gocyclo
+    - goconst
+    - unconvert
+    - unparam
