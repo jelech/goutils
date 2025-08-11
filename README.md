@@ -133,68 +133,6 @@ func main() {
 }
 ```
 
-### Parquet 文件操作
-
-```go
-package main
-
-import (
-    "fmt"
-    "log"
-    
-    "github.com/jelech/goutils/parquet"
-)
-
-type Person struct {
-    ID       int     `json:"id"`
-    Name     string  `json:"name"`
-    Age      int     `json:"age"`
-    Salary   float64 `json:"salary"`
-    IsActive bool    `json:"is_active"`
-}
-
-func main() {
-    // 注意：当前实现是 Go 1.17 兼容的占位符版本
-    // 完整的 Parquet 功能需要 Go 1.18+ 以支持泛型
-    
-    // Writer API（缓冲功能正常，实际文件写入为占位符）
-    writer, err := parquet.NewWriter("data.parquet")
-    if err != nil {
-        log.Fatal(err)
-    }
-    
-    people := []Person{
-        {ID: 1, Name: "Alice", Age: 30, Salary: 50000.0, IsActive: true},
-        {ID: 2, Name: "Bob", Age: 25, Salary: 45000.0, IsActive: true},
-    }
-    
-    // 缓冲数据（正常工作）
-    err = writer.Write(people)
-    if err != nil {
-        log.Fatal(err)
-    }
-    
-    // 关闭 writer（占位符）
-    err = writer.Close()
-    if err != nil {
-        log.Printf("占位符实现: %v", err)
-    }
-    
-    // 直接文件操作（Go 1.17 版本为占位符）
-    err = parquet.WriteFile("data.parquet", people)
-    if err != nil {
-        log.Printf("占位符实现: %v", err) // 当前版本中的预期行为
-    }
-    
-    var readData []Person
-    err = parquet.ReadFile("data.parquet", &readData)
-    if err != nil {
-        log.Printf("占位符实现: %v", err) // 当前版本中的预期行为
-    }
-    
-    fmt.Println("Parquet 包已为未来实现做好准备")
-}
-```
 
 ## API 文档
 
