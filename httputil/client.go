@@ -1,5 +1,5 @@
 // Package http provides HTTP client utilities with built-in retry mechanisms.
-package http
+package httputil
 
 import (
 	"bytes"
@@ -10,7 +10,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/jelech/goutils/retry"
+	"github.com/jelech/goutils/retryutil"
 )
 
 // Client represents an HTTP client with retry capabilities
@@ -138,7 +138,7 @@ func (c *Client) RequestWithRetry(method, url string, body interface{}, maxAttem
 	var response *http.Response
 	var lastErr error
 
-	err := retry.Do(func() error {
+	err := retryutil.Do(func() error {
 		resp, err := c.Request(method, url, body)
 		if err != nil {
 			lastErr = err
@@ -154,7 +154,7 @@ func (c *Client) RequestWithRetry(method, url string, body interface{}, maxAttem
 
 		response = resp
 		return nil
-	}, retry.WithMaxAttempts(maxAttempts), retry.WithRetryIf(func(err error) bool {
+	}, retryutil.WithMaxAttempts(maxAttempts), retryutil.WithRetryIf(func(err error) bool {
 		// Retry on network errors and 5xx status codes
 		return true
 	}))

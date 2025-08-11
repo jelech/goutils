@@ -1,5 +1,5 @@
 // Package stringutil provides string manipulation utilities.
-package stringutil
+package strutil
 
 import (
 	"crypto/rand"

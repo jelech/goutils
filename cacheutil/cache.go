@@ -1,5 +1,5 @@
 // Package cache provides various caching implementations.
-package cache
+package cacheutil
 
 import (
 	"sync"

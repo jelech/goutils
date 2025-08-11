@@ -1,5 +1,5 @@
 // Package convert provides type conversion utilities.
-package convert
+package convutil
 
 import (
 	"encoding/json"

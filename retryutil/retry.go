@@ -1,5 +1,5 @@
 // Package retry provides a flexible retry mechanism with configurable strategies.
-package retry
+package retryutil
 
 import (
 	"context"

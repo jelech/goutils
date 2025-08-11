@@ -1,4 +1,4 @@
-package timing
+package timeutil
 
 import (
 	"fmt"
