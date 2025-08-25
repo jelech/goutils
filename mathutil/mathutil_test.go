@@ -1,8 +1,11 @@
 package mathutil
 
 import (
+	"fmt"
 	"math"
+	"math/rand"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -375,4 +378,57 @@ func TestIsPowerOfTwoInt64(t *testing.T) {
 	assert.False(t, IsPowerOfTwoInt64(7))
 	assert.False(t, IsPowerOfTwoInt64(9))
 	assert.False(t, IsPowerOfTwoInt64(15))
+}
+
+func TestNoiseGenerator(t *testing.T) {
+	rand.Seed(time.Now().UnixNano())
+
+	fmt.Println("=== 中心值概率分布测试 ===")
+
+	// 测试以4为中心的分布
+	centerValue := 4
+	length := 3
+	probs := generateCenteredProbabilityDistribution(centerValue, length, 0.9)
+
+	fmt.Printf("以%d为中心，控制因子0.8的概率分布:\n", centerValue)
+	for i := 1; i <= 10; i++ {
+		if probs[i] > 0.001 {
+			fmt.Printf("P(%d) = %.1f%%\n", i, probs[i]*100)
+		}
+	}
+
+	fmt.Println("\n=== 概率偏移工具测试 ===")
+
+	// 测试概率偏移工具
+	inputValue := 5
+	controlFactors := []float64{0.1, 0.6, 0.9}
+
+	for _, factor := range controlFactors {
+		fmt.Printf("\n输入值: %d, 控制因子: %.1f\n", inputValue, factor)
+		fmt.Printf("偏移结果: ")
+
+		// 多次采样看分布效果
+		results := make(map[int]int)
+		for i := 0; i < 1000; i++ {
+			shifted := applyProbabilityShift(inputValue, 3, factor)
+			results[shifted]++
+		}
+
+		// 显示采样统计
+		for value := 1; value <= 10; value++ {
+			if count := results[value]; count > 0 {
+				fmt.Printf("%d:%.0f%% ", value, float64(count)/10)
+			}
+		}
+		fmt.Println()
+	}
+
+	fmt.Println("\n=== 单次偏移示例 ===")
+
+	// 单次偏移示例
+	testValues := []int{2, 5, 8}
+	for _, val := range testValues {
+		shifted := applyProbabilityShift(val, 3, 0.7)
+		fmt.Printf("输入: %d → 偏移后: %d\n", val, shifted)
+	}
 }
