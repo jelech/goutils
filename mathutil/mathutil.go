@@ -94,20 +94,6 @@ func MaxFloat64Slice(slice []float64) float64 {
 	return max
 }
 
-// MaxFloat64Slice returns the maximum value in an float64 slice
-func MaxFloat64Slice(slice []float64) float64 {
-	if len(slice) == 0 {
-		panic("slice cannot be empty")
-	}
-	max := slice[0]
-	for _, v := range slice[1:] {
-		if v > max {
-			max = v
-		}
-	}
-	return max
-}
-
 // MinFloat64Slice returns the minimum value in an float64 slice
 func MinFloat64Slice(slice []float64) float64 {
 	if len(slice) == 0 {
